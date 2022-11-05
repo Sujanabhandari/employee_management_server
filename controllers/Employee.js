@@ -1,5 +1,6 @@
-const User = require("../models/Users");
-const { asyncHandler } = require("../utils/asyncHandler.js");
+
+import User from "../models/Users.js";
+import asyncHandler from "../utils/asyncHandler.js";
 
 const getAllEmployee = asyncHandler(async (req, res, next) => {
   const condition = req.query;
@@ -73,7 +74,7 @@ const deletePost = asyncHandler(async (req, res, next) => {
   res.send({ success: `Employee with id of ${id} was deleted` });
 });
 
-module.exports = {
+export {
   getAllEmployee,
   addNewEmployee,
   getSingleEmployee,
