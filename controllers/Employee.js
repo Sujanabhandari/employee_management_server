@@ -5,7 +5,8 @@ import asyncHandler from "../utils/asyncHandler.js";
 const getAllEmployee = asyncHandler(async (req, res, next) => {
   const condition = req.query;
 
-  const allEmployee = await User.find(condition);
+  const allEmployee = await User.find()
+    .select({ email: 1, userName: 1, email: 1, firstName: 1, lastName: 1, profilePic: 1, role: 1, date: 1 });
   if (!allEmployee.length)
     return res
       .status(400)
@@ -26,11 +27,18 @@ const addNewEmployee = asyncHandler(async (req, res, next) => {
   res.status(201).send(newEmployee);
 });
 
+const addEmployees = asyncHandler(async (req, res, next) => {
+  const { body, user } = req;
+  console.log("Hello users");
+  const newEmployee = await User.create({ ...body, employee: user._id });
+  res.status(201).send(newEmployee);
+});
+
 const getSingleEmployee = asyncHandler(async (req, res, next) => {
   const {
     params: { id }
   } = req;
-  const employee = await User.findById(id);
+  const employee = await User.findById(id).select({ email: 1, userName: 1, email: 1, firstName: 1, lastName: 1, profilePic: 1, role: 1, date: 1 });
   if (!employee)
     return res
       .status(400)
@@ -77,6 +85,7 @@ const deletePost = asyncHandler(async (req, res, next) => {
 export {
   getAllEmployee,
   addNewEmployee,
+  addEmployees,
   getSingleEmployee,
   updateEmployee,
   deletePost

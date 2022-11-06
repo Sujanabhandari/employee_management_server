@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node app.js",
     "watch": "nodemon app.js",
-    "debug": "node --inspect app.js",
+    "debug": "nodemon --inspect app.js",
     "devwin": "set DEBUG=expressjs-middlewares:* & npm run watch",
     "devmac": "DEBUG=expressjs-middlewares:* npm run watch"
   },
