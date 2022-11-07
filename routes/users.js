@@ -1,17 +1,18 @@
-var express = require('express');
-var usersRouter = express.Router();
+import express from 'express';
 
-const {registerUser, loginUser, getUser} = require("../controllers/Auth");
-const {getAllEmployee, addNewEmployee,getSingleEmployee,updateEmployee,deletePost} = require("../controllers/Employee");
-const 
-    verifyToken
-   = require("../middlewares/verifyToken");
+let usersRouter = express.Router();
+
+import { registerUser, loginUser, getUser } from '../controllers/Auth.js';
+import { getAllEmployee, addNewEmployee, addEmployees, getSingleEmployee,updateEmployee,deletePost } from '../controllers/Employee.js';
+import verifyToken from '../middlewares/verifyToken.js';
 
 /* GET users listing. */
-usersRouter.route("/").get(getAllEmployee);
-usersRouter.route("/:id").get(getSingleEmployee).put(verifyToken, updateEmployee).delete(verifyToken, deletePost);
+usersRouter.route("/").get(getAllEmployee).post(verifyToken, addEmployees);
+// usersRouter.route("/:id").get(getSingleEmployee).put(verifyToken, updateEmployee).delete(deletePost);
 usersRouter.route("/addemployee").post(verifyToken, addNewEmployee);
 usersRouter.route("/signup").post(registerUser);
 usersRouter.post('/signin', loginUser);
-usersRouter.get('/me', verifyToken,getUser);
-module.exports = usersRouter;
+usersRouter.get('/me', verifyToken, getUser);
+usersRouter.route("/:id").get(verifyToken, getSingleEmployee).put(verifyToken, updateEmployee).delete(verifyToken, deletePost);
+
+export default usersRouter;

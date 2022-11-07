@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
+const { Schema, model, ObjectId } = mongoose;
 
 const userSchema = new Schema({
   userName: { type: String, minLength: 2, maxLength: 255 },
@@ -15,4 +15,4 @@ const userSchema = new Schema({
 });
 
 const User = mongoose.model("User", userSchema);
-module.exports = User;
+export default User;

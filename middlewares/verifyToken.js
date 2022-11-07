@@ -1,14 +1,19 @@
-const jwt = require("jsonwebtoken");
-const {asyncHandler} = require("../utils/asyncHandler.js");
+import jwt from "jsonwebtoken"
+import asyncHandler from "../utils/asyncHandler.js";
 
 const verifyToken = asyncHandler(async (req, res, next) => {
-  const {
-    headers: { authorization }
-  } = req;
-
-  if (!authorization) return res.status(401).send("Access denied. No token provided.");;
-  const { _id } = jwt.verify(authorization, process.env.JWT_SECRET);
-  req.userId = _id;
-  next();
+  console.log("llkjl", req);
+  const authHeaders = req.headers.authorization;
+  const { token } = req.headers;
+  console.log(authHeaders)
+  if (!authHeaders)
+    return res.status(401).send("Access denied. No token provided.");
+  const userContext = jwt.verify(authHeaders, process.env.JWT_SECRET);
+  if (userContext) {
+    req.user = userContext;
+    next();
+  }
+  else return res.status(403).send("Not Authorized");
 });
-module.exports = verifyToken;
+
+export default verifyToken;

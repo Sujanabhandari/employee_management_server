@@ -1,7 +1,8 @@
-const User = require("../models/Users");
-const jwt = require("jsonwebtoken");
-const {asyncHandler} = require("../utils/asyncHandler.js");
-const bcrypt = require("bcrypt");
+import User from "../models/Users.js";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import asyncHandler from "../utils/asyncHandler.js";
+import ErrorResponse from "../utils/ErrorResponse.js";
 
 const registerUser = asyncHandler(async (req, res, next) => {
     const {
@@ -13,7 +14,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
     const hash = await bcrypt.hash(password, 5);
     const { _id } = await User.create({ ...rest, email, password: hash });
     const token = jwt.sign({ _id }, process.env.JWT_SECRET);
-    res.status(201).json({ token });
+    res.status(201).send({ token });
   });
 
 const loginUser = asyncHandler(async (req, res, next) => {
@@ -31,11 +32,17 @@ const loginUser = asyncHandler(async (req, res, next) => {
     
   });
 
-const getUser = asyncHandler(async (req, res, next) => {
-    const { userId } = req;
-    const user = await User.findById(userId);
-    if (!user) throw new ErrorResponse(`User doesn't exist`, 404);
-    res.json(user);
-  });
+// const getUser = asyncHandler(async (req, res, next) => {
+//     const user = await User.findById(req.user._id);
+//     console.log("UserId")
+//     if (!user) return res.status(404).send(`User doesn't exist`, 404);
+//     return res.status(200).json(user);
+//   });
 
-module.exports = { registerUser, loginUser, getUser };
+const getUser = async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  if (!user) return res.status(404).send(`User doesn't exist`, 404);
+  return res.status(200).json(user);
+};
+
+export { registerUser, loginUser, getUser };
