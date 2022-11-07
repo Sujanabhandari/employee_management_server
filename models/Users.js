@@ -4,7 +4,7 @@ const { Schema, model, ObjectId } = mongoose;
 
 const userSchema = new Schema({
   userName: { type: String, minLength: 2, maxLength: 255 },
-  email: { type: String, unique: true, required: true, required: [true, 'Password is required'] },
+  email: { type: String, unique: true },
   firstName: { type: String, minLength: 2, maxLength: 255},
   lastName: { type: String, minLength: 2, maxLength: 255 },
   profilePic: { type: String},
