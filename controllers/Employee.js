@@ -28,9 +28,17 @@ const addNewEmployee = asyncHandler(async (req, res, next) => {
 });
 
 const addEmployees = asyncHandler(async (req, res, next) => {
-  const { body, user } = req;
+  const { body,
+    user } = req;
   console.log("Hello users");
-  const newEmployee = await User.create({ ...body, employee: user._id });
+  const newEmployee = await User.insertMany(req.body.users, function (err, docs) {
+    if (err){ 
+        return console.error(err);
+    } else {
+      console.log("Multiple documents inserted to Collection");
+    }
+  });
+
   res.status(201).send(newEmployee);
 });
 
