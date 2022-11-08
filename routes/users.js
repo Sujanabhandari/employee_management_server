@@ -3,13 +3,11 @@ import express from 'express';
 let usersRouter = express.Router();
 
 import { registerUser, loginUser, getUser } from '../controllers/Auth.js';
-import { getAllEmployee, addNewEmployee, addEmployees, getSingleEmployee,updateEmployee,deletePost } from '../controllers/Employee.js';
+import { getAllEmployee, addEmployees, getSingleEmployee,updateEmployee,deletePost } from '../controllers/Employee.js';
 import verifyToken from '../middlewares/verifyToken.js';
 
 /* GET users listing. */
 usersRouter.route("/").get(getAllEmployee).post(verifyToken, addEmployees);
-// usersRouter.route("/:id").get(getSingleEmployee).put(verifyToken, updateEmployee).delete(deletePost);
-usersRouter.route("/addemployee").post(verifyToken, addNewEmployee);
 usersRouter.route("/signup").post(registerUser);
 usersRouter.post('/signin', loginUser);
 usersRouter.get('/me', verifyToken, getUser);

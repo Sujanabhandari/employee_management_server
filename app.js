@@ -11,6 +11,8 @@ import cors from 'cors';
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import {fileURLToPath} from 'url';
+import commentRouter from './routes/comments.js';
+
 var app = express();
 
 // view engine setup
@@ -28,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/comments', commentRouter);
 const port = process.env.PORT || 3000;
 
 // catch 404 and forward to error handler
