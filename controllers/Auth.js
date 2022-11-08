@@ -32,15 +32,8 @@ const loginUser = asyncHandler(async (req, res, next) => {
     
   });
 
-// const getUser = asyncHandler(async (req, res, next) => {
-//     const user = await User.findById(req.user._id);
-//     console.log("UserId")
-//     if (!user) return res.status(404).send(`User doesn't exist`, 404);
-//     return res.status(200).json(user);
-//   });
-
 const getUser = async (req, res, next) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id)
   if (!user) return res.status(404).send(`User doesn't exist`, 404);
   return res.status(200).json(user);
 };

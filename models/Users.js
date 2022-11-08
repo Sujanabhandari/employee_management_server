@@ -11,6 +11,7 @@ const userSchema = new Schema({
   address: { type: String, minLength: 2, maxLength: 255 },
   role: { type: String},
   date: { type: Date, default: Date.now },
+  comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   password: { type: String},
 });
 
