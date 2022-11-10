@@ -9,12 +9,11 @@ const registerUser = asyncHandler(async (req, res, next) => {
       body: { email, password, ...rest }
     } = req;
     const found = await User.findOne({ email });
-    console.log(found);
     if (found) throw new ErrorResponse('User already exists', 403);
     const hash = await bcrypt.hash(password, 5);
     const { _id } = await User.create({ ...rest, email, password: hash });
     const token = jwt.sign({ _id }, process.env.JWT_SECRET);
-    res.status(201).send({ token });
+    res.json({ token });
   });
 
 const loginUser = asyncHandler(async (req, res, next) => {
@@ -34,8 +33,8 @@ const loginUser = asyncHandler(async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
   const user = await User.findById(req.user._id)
-  if (!user) return res.status(404).send(`User doesn't exist`, 404);
-  return res.status(200).json(user);
+  if (!user) throw new ErrorResponse(`User doesn't exist`, 404);
+  res.json(user);
 };
 
 export { registerUser, loginUser, getUser };

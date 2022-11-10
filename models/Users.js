@@ -3,12 +3,12 @@ import mongoose from 'mongoose';
 const { Schema, model, ObjectId } = mongoose;
 
 const userSchema = new Schema({
-  userName: { type: String, minLength: 2, maxLength: 255 },
-  email: { type: String, unique: true },
-  firstName: { type: String, minLength: 2, maxLength: 255},
-  lastName: { type: String, minLength: 2, maxLength: 255 },
-  profilePic: { type: String},
-  address: { type: String, minLength: 2, maxLength: 255 },
+  userName: { type: String },
+  email: { type: String, unique: true,
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']},
+  firstName: { type: String },
+  lastName: { type: String },
+  address: { type: String },
   role: { type: String},
   date: { type: Date, default: Date.now },
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
@@ -17,3 +17,4 @@ const userSchema = new Schema({
 
 const User = mongoose.model("User", userSchema);
 export default User;
+ 

@@ -15,8 +15,11 @@ const getAllEmployee = asyncHandler(async (req, res, next) => {
 }
 );
 const addEmployees = asyncHandler(async (req, res, next) => {
+  // const found = await User.findOne({ email });
+  // if (found) throw new ErrorResponse('User already exists', 403);
+
   const newEmployees = await User.insertMany(req.body.users);
-  res.status(201).send(newEmployees);
+  res.status(201).json(newEmployees);
 });
 
 const getSingleEmployee = asyncHandler(async (req, res, next) => {
@@ -27,10 +30,10 @@ const getSingleEmployee = asyncHandler(async (req, res, next) => {
   if (!employee)
     return res
       .status(400)
-      .send(
+      .json(
         `There are no existing employee with this id${id}`
       );
-  res.send(employee);
+  res.json(employee);
 });
 
 const updateEmployee = asyncHandler(async (req, res, next) => {
