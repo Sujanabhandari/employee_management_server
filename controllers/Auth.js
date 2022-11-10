@@ -6,12 +6,19 @@ import ErrorResponse from "../utils/ErrorResponse.js";
 
 const registerUser = asyncHandler(async (req, res, next) => {
     const {
-      body: { email, password, ...rest }
+      body: { email, password, userName, ...rest }
     } = req;
-    const found = await User.findOne({ email });
-    if (found) throw new ErrorResponse('User already exists', 403);
+    const existingUsers = await User.find({
+      $or: [{email: email}, {userName: userName}]
+    });
+    existingUsers.forEach(usr => {
+      if (usr.userName === userName)
+        throw new ErrorResponse('Username not available', 403);
+      if (usr.email === email)
+        throw new ErrorResponse('User with the email already exists', 403);
+    });
     const hash = await bcrypt.hash(password, 5);
-    const { _id } = await User.create({ ...rest, email, password: hash });
+    const { _id } = await User.create({ ...rest, userName, email, password: hash });
     const token = jwt.sign({ _id }, process.env.JWT_SECRET);
     res.json({ token });
   });
