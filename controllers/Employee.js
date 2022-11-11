@@ -54,9 +54,8 @@ const updateEmployee = asyncHandler(async (req, res, next) => {
   res.send(updateEmployee);
 });
 
-const deletePost = asyncHandler(async (req, res, next) => {
+const deleteEmployee = asyncHandler(async (req, res, next) => {
   const {
-    userId,
     params: { id }
   } = req;
   const found = await User.findById(id);
@@ -75,5 +74,5 @@ export {
   addEmployees,
   getSingleEmployee,
   updateEmployee,
-  deletePost
+  deleteEmployee
 };
