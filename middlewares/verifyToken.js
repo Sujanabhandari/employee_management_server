@@ -4,8 +4,6 @@ import asyncHandler from "../utils/asyncHandler.js";
 const verifyToken = asyncHandler(async (req, res, next) => {
   console.log("llkjl", req);
   const authHeaders = req.headers.authorization;
-  const { token } = req.headers;
-  console.log(authHeaders)
   if (!authHeaders)
     return res.status(401).send("Access denied. No token provided.");
   const userContext = jwt.verify(authHeaders, process.env.JWT_SECRET);
