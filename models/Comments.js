@@ -1,6 +1,6 @@
 
 import mongoose from 'mongoose';
-const { Schema, model, ObjectId } = mongoose;
+const { Schema } = mongoose;
 
 const commentSchema = new Schema({
   date: { type: Date, default: Date.now },

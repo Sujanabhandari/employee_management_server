@@ -14,11 +14,8 @@ const getAllEmployee = asyncHandler(async (req, res, next) => {
   res.status(200).send(allEmployee);
 }
 );
-const addEmployees = asyncHandler(async (req, res, next) => {
-  // If email is unique and required , we check if email is alredy exists.
-  // const found = await User.findOne({ email });
-  // if (found) throw new ErrorResponse('User already exists', 403);
 
+const addEmployees = asyncHandler(async (req, res, next) => {
   const newEmployees = await User.insertMany(req.body.users);
   res.status(201).json(newEmployees);
 });
@@ -40,7 +37,6 @@ const getSingleEmployee = asyncHandler(async (req, res, next) => {
 
 const updateEmployee = asyncHandler(async (req, res, next) => {
   const {
-    userId,
     body,
     params: { id }
   } = req;

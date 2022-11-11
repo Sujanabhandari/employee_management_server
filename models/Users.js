@@ -1,7 +1,15 @@
-import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
-const { Schema, model, ObjectId } = mongoose;
+const { Schema } = mongoose;
 
+/**
+ * In the requirement csv file doesn't have email field.
+ * It means user should be able to import employees without
+ * any required fields.
+ * Hence, email and username are not unique right now.
+ * 
+ * TODO : Ask this requirement during test case feedback.
+ * TODO : Change email and firtname constraints accordingly.
+ */
 const userSchema = new Schema({
   userName: { type: String },
   email: { type: String},
