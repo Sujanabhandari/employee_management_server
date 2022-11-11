@@ -7,7 +7,6 @@ const userSchema = new Schema({
   email: { type: String},
   firstName: { type: String },
   lastName: { type: String },
-  address: { type: String },
   street: { type: String },
   postcode: { type: String },
   city: { type: String },
