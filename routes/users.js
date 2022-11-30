@@ -5,9 +5,10 @@ let usersRouter = express.Router();
 import { registerUser, loginUser, getUser } from '../controllers/Auth.js';
 import { getAllEmployee, addEmployees, getSingleEmployee,updateEmployee,deleteEmployee } from '../controllers/Employee.js';
 import verifyToken from '../middlewares/verifyToken.js';
+import paginationEmployee from '../middlewares/paginationEmployee.js';
 
 /* GET users listing. */
-usersRouter.route("/users").get(verifyToken, getAllEmployee).post(verifyToken, addEmployees);
+usersRouter.route("/users").get( verifyToken, paginationEmployee, getAllEmployee).post(verifyToken, addEmployees);
 usersRouter.route("/signup").post(registerUser);
 usersRouter.post('/signin', loginUser);
 usersRouter.get('/users/me', verifyToken, getUser);
