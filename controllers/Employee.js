@@ -2,8 +2,8 @@
 import User from "../models/Users.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
+
 const getAllEmployee = asyncHandler(async (req, res, next) => {
-  const condition = req.query;
   const allEmployee = await User.find();
   if (!allEmployee.length)
     return res
@@ -11,7 +11,7 @@ const getAllEmployee = asyncHandler(async (req, res, next) => {
       .send(
         "There are no existing employee.Please Create a new Employee."
       );
-  res.status(200).send(allEmployee);
+  res.status(200).send(res.paginationEmployee);
 }
 );
 
